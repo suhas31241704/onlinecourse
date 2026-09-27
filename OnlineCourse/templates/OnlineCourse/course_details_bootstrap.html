@@ -2,18 +2,42 @@
 {% load static %}
 
 {% block content %}
+
 <div class="container mt-4">
+
     <h2>{{ course.name }}</h2>
+
     <p>{{ course.description }}</p>
 
     <h4>Lessons</h4>
-    <ul class="list-group">
+
+    <ul class="list-group mb-4">
+
         {% for lesson in course.lessons.all %}
+
         <li class="list-group-item">
-            <strong>{{ lesson.order }}. {{ lesson.title }}</strong>
-            <p>{{ lesson.content }}</p>
+
+            <strong>
+                {{ lesson.order }}. {{ lesson.title }}
+            </strong>
+
+            <p>
+                {{ lesson.content }}
+            </p>
+
         </li>
+
         {% endfor %}
+
     </ul>
+
+    <a
+        href="{% url 'OnlineCourse:exam' course.id %}"
+        class="btn btn-primary mt-3"
+    >
+        Start Exam
+    </a>
+
 </div>
+
 {% endblock %}

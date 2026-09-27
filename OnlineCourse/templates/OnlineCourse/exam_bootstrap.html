@@ -1,0 +1,70 @@
+{% extends "OnlineCourse/course_list_bootstrap.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>{{ course.name }} - Exam</h2>
+
+    <form
+        method="post"
+        action="{% url 'OnlineCourse:submit' course.id %}"
+    >
+
+        {% csrf_token %}
+
+        {% for lesson in course.lessons.all %}
+
+            {% for question in lesson.questions.all %}
+
+                <div class="card mb-3">
+
+                    <div class="card-body">
+
+                        <h5>
+                            {{ question.question_text }}
+                        </h5>
+
+                        {% for choice in question.choice_set.all %}
+
+                            <div class="form-check">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="choice{{ question.id }}"
+                                    value="{{ choice.id }}"
+                                    id="choice{{ choice.id }}"
+                                >
+
+                                <label
+                                    class="form-check-label"
+                                    for="choice{{ choice.id }}"
+                                >
+                                    {{ choice.choice_text }}
+                                </label>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% endfor %}
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+        >
+            Submit Exam
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}
